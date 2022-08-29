@@ -24,11 +24,6 @@ public interface AnimaFrameworkConstants {
     // 系统参数缓存
     String cache_sysProperties = global_prefix + sysProperties + "c";
 
-    // 用户角色缓存
-    String cahce_rbac_user_role = global_prefix + rbac + "ur";
-    // 角色API缓存
-    String cahce_rbac_role_api = global_prefix + rbac + "ra";
-
     // CrashLog定时任务锁
     String crashLog_lock = global_prefix + "cl:l";
     // CrashLog缓存

@@ -43,7 +43,7 @@ public class CrashLogJob {
                     }
                     entities.add(entity);
                 }
-                this.crashLogDomainService.saveAll(entities);
+                this.crashLogDomainService.batchSave(entities);
             }
         } catch (Exception e) {
             log.error("CrashLog日志定时任务异常", e);
