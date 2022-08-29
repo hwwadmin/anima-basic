@@ -45,6 +45,6 @@ sh.exe.stackdump
 **_log*
 
 # config ignore
-*.yml
-*.yaml
-*.properties
+#*.yml
+#*.yaml
+#*.properties

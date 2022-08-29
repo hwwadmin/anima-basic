@@ -1,0 +1,19 @@
+# 开发环境
+env-dev: &env-dev
+  active: common,server,dev
+  log: dev
+
+# 测试环境
+env-test: &env-test
+  active: common,server,test
+  log: dev
+
+# 线上环境
+env-prod: &env-prod
+  active: common,server,prod
+  log: prod
+
+spring:
+  profiles:
+    #有效环境设置 profile
+    *env-dev

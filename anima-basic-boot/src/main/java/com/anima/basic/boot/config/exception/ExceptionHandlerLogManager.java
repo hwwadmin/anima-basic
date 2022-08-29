@@ -14,7 +14,7 @@ import java.util.Objects;
 @Component
 public class ExceptionHandlerLogManager {
 
-    @Value("${byfresh.log:defaultExceptionHandlerLog}")
+    @Value("${anima.log:defaultExceptionHandlerLog}")
     private String beanName;
 
     private ExceptionHandlerLog handlerLog;

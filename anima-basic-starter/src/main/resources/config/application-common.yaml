@@ -1,0 +1,58 @@
+########################################
+## 该配置文件为通用配置，一般无需修改
+########################################
+server:
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: anima
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+    suffix: .html
+  mvc:
+    static-path-pattern: /static/**
+    throwExceptionIfNoHandlerFound: true
+  main:
+    banner-mode: log
+  output:
+    ansi:
+      enabled: DETECT
+  # JPA设置
+  jpa:
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: none
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+
+# 日志设置
+logging:
+  config: classpath:config/log/log4j2-${spring.profiles.log}.xml
+  register-shutdown-hook: true
+  level:
+    root: info
+
+# 加密设置
+jasypt:
+  encryptor:
+    bean: standardConfigEncryptor
+
+# spring-boot-actuator监控组件管理配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
