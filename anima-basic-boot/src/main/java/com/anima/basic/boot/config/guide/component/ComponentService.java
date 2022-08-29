@@ -1,4 +1,4 @@
-package com.anima.basic.boot.core.guide.component;
+package com.anima.basic.boot.config.guide.component;
 
 /**
  * 服务组件接口

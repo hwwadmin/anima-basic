@@ -1,4 +1,4 @@
-package com.anima.basic.boot.core.guide;
+package com.anima.basic.boot.config.guide;
 
 /**
  * 启动顺序定义

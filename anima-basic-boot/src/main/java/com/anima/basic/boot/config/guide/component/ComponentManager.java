@@ -1,4 +1,4 @@
-package com.anima.basic.boot.core.guide.component;
+package com.anima.basic.boot.config.guide.component;
 
 import com.anima.basic.common.SpringContextUtils;
 import com.anima.basic.common.exception.UtilsException;

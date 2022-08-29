@@ -1,6 +1,6 @@
-package com.anima.basic.boot.core.guide;
+package com.anima.basic.boot.config.guide;
 
-import com.anima.basic.boot.core.guide.component.ComponentManager;
+import com.anima.basic.boot.config.guide.component.ComponentManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

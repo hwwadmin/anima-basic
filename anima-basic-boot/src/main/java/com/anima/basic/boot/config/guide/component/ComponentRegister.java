@@ -1,4 +1,4 @@
-package com.anima.basic.boot.core.guide.component;
+package com.anima.basic.boot.config.guide.component;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;

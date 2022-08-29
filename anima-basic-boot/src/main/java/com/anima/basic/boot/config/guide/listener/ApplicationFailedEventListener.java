@@ -1,4 +1,4 @@
-package com.anima.basic.boot.core.guide.listener;
+package com.anima.basic.boot.config.guide.listener;
 
 import org.springframework.boot.context.event.ApplicationFailedEvent;
 import org.springframework.context.ApplicationListener;

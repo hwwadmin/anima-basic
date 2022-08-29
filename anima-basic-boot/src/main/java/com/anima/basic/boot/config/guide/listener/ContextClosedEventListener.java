@@ -1,6 +1,6 @@
-package com.anima.basic.boot.core.guide.listener;
+package com.anima.basic.boot.config.guide.listener;
 
-import com.anima.basic.boot.core.guide.component.ComponentManager;
+import com.anima.basic.boot.config.guide.component.ComponentManager;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.lang.NonNull;
