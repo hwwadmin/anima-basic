@@ -1,7 +1,6 @@
 package com.anima.basic.boot.core.redis;
 
 import com.anima.basic.boot.core.redis.sorted.*;
-import com.anima.basic.boot.redis.sorted.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

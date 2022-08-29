@@ -9,6 +9,7 @@
     <modules>
         <module>anima-basic-common</module>
         <module>anima-basic-boot</module>
+        <module>anima-basic-framework</module>
     </modules>
     <packaging>pom</packaging>
 

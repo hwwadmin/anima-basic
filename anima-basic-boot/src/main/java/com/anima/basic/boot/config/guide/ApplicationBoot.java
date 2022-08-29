@@ -1,8 +1,6 @@
 package com.anima.basic.boot.config.guide;
 
-import com.anima.basic.boot.config.guide.listener.ApplicationFailedEventListener;
-import com.anima.basic.boot.config.guide.listener.ContextClosedEventListener;
-import com.anima.basic.boot.guide.listener.*;
+import com.anima.basic.boot.config.guide.listener.*;
 import com.google.common.collect.Lists;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationListener;

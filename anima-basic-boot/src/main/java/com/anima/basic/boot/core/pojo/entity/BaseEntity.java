@@ -1,6 +1,7 @@
 package com.anima.basic.boot.core.pojo.entity;
 
 import cn.hutool.core.util.IdUtil;
+import com.anima.basic.common.enums.StatusEnum;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,15 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "delete_time")
     private Instant deleteTime;
 
+    /**
+     * UNAVAILABLE(0, "不可用"),
+     * AVAILABLE(1, "可用的"),
+     * DELETED(2, "软删除"),
+     * {@link com.anima.basic.common.enums.StatusEnum}
+     */
+    @Column(name = "status")
+    private Integer status;
+
     @PrePersist
     public void prePersist() {
         if (Objects.isNull(this.id)) {
@@ -67,6 +77,9 @@ public abstract class BaseEntity implements Serializable {
             this.createTime = Instant.now();
         }
         this.updateTime = Instant.now();
+        if (Objects.isNull(this.status)) {
+            this.status = StatusEnum.AVAILABLE.getKey();
+        }
     }
 
     @PreUpdate
