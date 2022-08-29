@@ -3,6 +3,8 @@ package com.anima.basic.boot.config;
 import com.anima.basic.boot.config.interceptor.InterceptorInfo;
 import com.anima.basic.boot.config.interceptor.InterceptorManager;
 import com.anima.basic.boot.config.mvc.formatter.StringTrimFormatterFactory;
+import com.anima.basic.boot.core.password.PasswordEncoder;
+import com.anima.basic.boot.core.password.bcrypt.BCryptPasswordEncoder;
 import com.anima.basic.boot.utils.JsonUtils;
 import com.anima.basic.common.SpringContextUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +88,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter() {
         return new MappingJackson2HttpMessageConverter(JsonUtils.createObjectMapper());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
