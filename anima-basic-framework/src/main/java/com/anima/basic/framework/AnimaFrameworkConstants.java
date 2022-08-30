@@ -29,4 +29,6 @@ public interface AnimaFrameworkConstants {
     // CrashLog缓存
     String crashLog_cache = global_prefix + "cl:c";
 
+    String role = "role";
+
 }

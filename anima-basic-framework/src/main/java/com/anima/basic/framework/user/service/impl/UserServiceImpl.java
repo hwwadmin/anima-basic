@@ -4,6 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import com.anima.basic.boot.core.mvc.CrudServiceImpl;
 import com.anima.basic.boot.core.password.PasswordEncoder;
+import com.anima.basic.framework.AnimaFrameworkConstants;
+import com.anima.basic.framework.rbac.service.RbacService;
 import com.anima.basic.framework.user.dao.UserDao;
 import com.anima.basic.framework.user.model.UserEntity;
 import com.anima.basic.framework.user.pojo.vo.LoginVO;
@@ -22,6 +24,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends CrudServiceImpl<UserEntity, UserDao> implements UserService {
 
     @Autowired
+    private RbacService rbacService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserDao userDao) {
@@ -33,6 +37,8 @@ public class UserServiceImpl extends CrudServiceImpl<UserEntity, UserDao> implem
         UserEntity user = this.dao.findByUsernameAndDeleteTimeIsNull(username);
         Assert.isTrue(passwordEncoder.matches(password, user.getPassword()), "用户名或密码错误");
         StpUtil.login(user.getId());
+        // 设置用户角色列表到token-session，即token创建的时候具有的角色列表就固定了
+        StpUtil.getTokenSession().set(AnimaFrameworkConstants.role, rbacService.getRoleIdsByUserId(user.getId()));
         return LoginVO.builder()
                 .userId(user.getId())
                 .accessToken(StpUtil.getTokenValue())
