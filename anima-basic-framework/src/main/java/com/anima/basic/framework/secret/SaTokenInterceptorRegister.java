@@ -6,6 +6,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.anima.basic.boot.config.interceptor.InterceptorInfo;
 import com.anima.basic.boot.config.interceptor.InterceptorRegister;
 import com.anima.basic.common.exception.IllegalValidatedException;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;
 
@@ -20,26 +21,37 @@ import java.util.List;
 @Component
 public class SaTokenInterceptorRegister implements InterceptorRegister {
 
+    private static final List<String> notMatchList = ImmutableList.<String>builder()
+            // static
+            .add("*.js")
+            .add("*.css")
+            .add("*.html")
+            .add("*.png")
+            .add("*.jpg")
+            .add("*.jpeg")
+            // open api
+            .add("/**/open/**")
+            .add("/**/**/open/**")
+            .build();
+
     @Override
     public List<InterceptorInfo> getInterceptorInfos() {
         List<InterceptorInfo> interceptorInfos = Lists.newArrayList();
         interceptorInfos.add(InterceptorInfo.builder()
                 .name("SaRouteInterceptor")
-                .instance(new SaRouteInterceptor((req, res, handler) -> {
-                    SaRouter.match("/**")
-                            .notMatch("/**/open/**").notMatch("/**/**/open/**")
-                            .check(r -> {
-                                try {
-                                    // 登录认证
-                                    StpUtil.checkLogin();
-                                    // 权限认证
-                                    // todo
-                                } catch (Exception e) {
-                                    // 异常包装
-                                    throw IllegalValidatedException.exception(e);
-                                }
-                            });
-                }))
+                .instance(new SaRouteInterceptor((req, res, handler) -> SaRouter.match("/**")
+                        .notMatch(notMatchList)
+                        .check(r -> {
+                            try {
+                                // 登录认证
+                                StpUtil.checkLogin();
+                                // 权限认证
+                                // todo
+                            } catch (Exception e) {
+                                // 异常包装
+                                throw IllegalValidatedException.exception(e);
+                            }
+                        })))
                 .order(1)
                 .pathPatterns(Lists.newArrayList("/**"))
                 .build());
