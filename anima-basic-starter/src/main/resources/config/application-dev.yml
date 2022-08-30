@@ -135,7 +135,7 @@ sa-token:
   timeout: 2592000
   activity-timeout: -1
   is-concurrent: true
-  is-share: true
+  is-share: false
   is-log: false
   isPrint: false
   jwt-secret-key: vbqonvoqmontrbvudhscopcnspndwjqdkqwjk

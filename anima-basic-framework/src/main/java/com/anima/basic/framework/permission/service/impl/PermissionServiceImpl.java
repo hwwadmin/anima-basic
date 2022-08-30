@@ -26,7 +26,7 @@ public class PermissionServiceImpl extends CrudServiceImpl<PermissionEntity, Per
     @Override
     public PermissionEntity findByUriAndMethod(String uri, String method) {
         // todo 后面在改造成缓存
-        PermissionEntity permission = this.dao.findByUriAndMethodAndDeleteTimeIsNull(uri, method);
+        PermissionEntity permission = this.dao.findByUriAndMethodAndDeleteTimeIsNull(uri, method.toLowerCase());
         Assert.isTrue(Objects.nonNull(permission), "未知接口");
         Assert.isTrue(YesNoEnum.isYes(permission.getState()), "接口未启用");
         return permission;

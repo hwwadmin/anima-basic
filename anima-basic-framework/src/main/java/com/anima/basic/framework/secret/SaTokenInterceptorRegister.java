@@ -48,7 +48,9 @@ public class SaTokenInterceptorRegister implements InterceptorRegister {
                         .notMatch(notMatchList)
                         .check(r -> {
                             try {
-                                // 角色鉴权(自动包含了用户登录认证)
+                                // 用户认证
+                                StpUtil.checkLogin();
+                                // 角色鉴权
                                 StpUtil.hasRoleOr(rbacService.getRoleIdsByRequest(req));
                             } catch (Exception e) {
                                 // 异常包装
