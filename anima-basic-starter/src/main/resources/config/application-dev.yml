@@ -1,5 +1,5 @@
 server:
-  port: 18080
+  port: 8080
   address: 0.0.0.0
   maxHttpHeaderSize: 8192
   # HTTP设置
@@ -128,6 +128,18 @@ spring:
         login-password: 123456
         # IP白名单，这里默认只允许当前PC查看
         allow: 127.0.0.1
+
+# Sa-Token 配置
+sa-token:
+  token-name: authorization
+  timeout: 2592000
+  activity-timeout: -1
+  is-concurrent: true
+  is-share: true
+  is-log: false
+  isPrint: false
+  jwt-secret-key: vbqonvoqmontrbvudhscopcnspndwjqdkqwjk
+  isReadCookie: false
 
 # 自定义配置
 anima:

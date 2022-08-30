@@ -18,6 +18,7 @@ public class InterceptorInfo {
     private String name;
 
     private Class<? extends HandlerInterceptor> interceptor;
+    private HandlerInterceptor instance; // 如果已经添加了实例就不会自动生成
 
     private Integer order;
 

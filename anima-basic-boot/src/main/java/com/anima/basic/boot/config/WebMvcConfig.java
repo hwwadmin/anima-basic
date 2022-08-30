@@ -47,7 +47,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedHeaders("*").allowedMethods("*").allowedOrigins("*").allowCredentials(true);
+        registry.addMapping("/**").allowedHeaders("*").allowedMethods("*").allowedOriginPatterns("*").allowCredentials(true);
     }
 
     /**
@@ -65,7 +65,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 log.warn("[{}]拦截器配置缺失", t.getName());
                 return;
             }
-            HandlerInterceptor interceptor = SpringContextUtils.getBean(t.getInterceptor());
+            HandlerInterceptor interceptor = t.getInstance();
+            if (Objects.isNull(interceptor)) {
+                interceptor = SpringContextUtils.getBean(t.getInterceptor());
+            }
             InterceptorRegistration interceptorRegistration = registry.addInterceptor(interceptor);
             if (Objects.nonNull(t.getOrder())) {
                 interceptorRegistration.order(t.getOrder());

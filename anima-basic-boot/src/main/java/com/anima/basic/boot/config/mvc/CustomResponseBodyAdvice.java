@@ -17,7 +17,7 @@ import java.util.Collection;
 /**
  * 统一的返回体封装
  */
-@ControllerAdvice(basePackages = "com.anima.*")
+@ControllerAdvice(basePackages = "com.anima")
 public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
