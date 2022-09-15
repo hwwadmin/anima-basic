@@ -1,5 +1,6 @@
 package com.anima.basic.boot.core.mvc;
 
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.anima.basic.boot.core.lock.DistributedLock;
@@ -36,8 +37,13 @@ public abstract class CrudCacheServiceImpl<T extends BaseEntity, DAO extends Jpa
     protected String cacheKey;
     protected String lockPrefix;
 
+    private final TypeReference<T> type;
+    private final TypeReference<List<T>> typeList;
+
     public CrudCacheServiceImpl(DAO dao) {
         super(dao);
+        this.type = new TypeReference<>() {};
+        this.typeList = new TypeReference<>() {};
         this.cacheKey = String.format("crud:c:%s:", tableName);
         this.lockPrefix = String.format("crud:l:%s:", tableName);
     }
@@ -84,20 +90,20 @@ public abstract class CrudCacheServiceImpl<T extends BaseEntity, DAO extends Jpa
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
     @Override
     public Optional<T> find(Long id) {
-        T entity = (T) this.redisSupport.getOps4str().get(getKey(id));
+        T entity = this.redisSupport.getOps4str().get(getKey(id), type);
         if (Objects.isNull(entity)) {
             // 去数据库同步的过程进行上锁，防止缓存击穿
             String key = lockPrefix + id;
             try {
                 if (lock.tryLock(key, 100)) {
                     // 再去读取一次缓存，如果有读取到直接返回
-                    entity = (T) this.redisSupport.getOps4str().get(getKey(id));
+                    entity = this.redisSupport.getOps4str().get(getKey(id), type);
                     if (Objects.nonNull(entity)) {
                         // 查到了说明已经重新写过缓存了不需要再去查数据库直接返回
                         return Optional.of(entity);
                     }
                     Optional<T> optional = super.find(id);
-                    if (!optional.isPresent()) {
+                    if (optional.isEmpty()) {
                         // 数据不存在的时候写一个空对象到缓存，这个缓存持续5s，防止缓存穿透
                         this.redisSupport.getOps4str().set(getKey(id), ReflectUtil.newInstance(clazz), 5L, TimeUnit.SECONDS);
                         return optional;
@@ -127,10 +133,7 @@ public abstract class CrudCacheServiceImpl<T extends BaseEntity, DAO extends Jpa
     public List<T> list(Iterable<Long> ids) {
         List<String> keys = Lists.newArrayList();
         ids.forEach(t -> keys.add(getKey(t)));
-        List<T> data = this.redisSupport.getOps4str().batchGet(keys).stream()
-                .filter(Objects::nonNull)
-                .map(t -> (T) t)
-                .collect(Collectors.toList());
+        List<T> data = this.redisSupport.getOps4str().batchGet(keys, typeList).stream().filter(Objects::nonNull).collect(Collectors.toList());
         if (Objects.equals(keys.size(), data.size())) {
             // 数据长度一样的话说明都从缓存查询到直接返回
             return data;

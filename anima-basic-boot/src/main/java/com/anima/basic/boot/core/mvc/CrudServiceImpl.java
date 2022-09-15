@@ -77,7 +77,7 @@ public abstract class CrudServiceImpl<T extends BaseEntity, DAO extends JpaRepos
     @Override
     public void del(Long id) {
         Optional<T> optional = this.find(id);
-        if (!optional.isPresent()) {
+        if (optional.isEmpty()) {
             return;
         }
         T entity = optional.get();

@@ -1,5 +1,7 @@
 package com.anima.basic.boot.core.redis.sorted;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.TypeReference;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Collection;
@@ -35,6 +37,10 @@ public class StringRedisSupport {
         return redisTemplate.opsForValue().get(key);
     }
 
+    public <T> T get(final String key, TypeReference<T> type) {
+        return Convert.convert(type, get(key));
+    }
+
     public String getString(final String key) {
         return (String) redisTemplate.opsForValue().get(key);
     }
@@ -49,6 +55,10 @@ public class StringRedisSupport {
 
     public List<Object> batchGet(Collection<String> keys) {
         return redisTemplate.opsForValue().multiGet(keys);
+    }
+
+    public <T> List<T> batchGet(Collection<String> keys, TypeReference<List<T>> type) {
+        return Convert.convert(type, redisTemplate.opsForValue().multiGet(keys));
     }
 
 }
