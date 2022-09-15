@@ -1,4 +1,4 @@
-package com.anima.basic.framework.secret;
+package com.anima.basic.framework.sa;
 
 import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import cn.dev33.satoken.router.SaRouter;
@@ -51,7 +51,9 @@ public class SaTokenInterceptorRegister implements InterceptorRegister {
                                 // 用户认证
                                 StpUtil.checkLogin();
                                 // 角色鉴权
-                                StpUtil.hasRoleOr(rbacService.getRoleIdsByRequest(req));
+                                String uri = req.getRequestPath();
+                                String method = req.getMethod();
+                                StpUtil.hasRoleOr(rbacService.getRoleIds4Request(uri, method));
                             } catch (Exception e) {
                                 // 异常包装
                                 throw IllegalValidatedException.exception(e);

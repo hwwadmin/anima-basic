@@ -1,6 +1,5 @@
 package com.anima.basic.framework.rbac.service.impl;
 
-import cn.dev33.satoken.context.model.SaRequest;
 import com.anima.basic.boot.core.redis.RedisSupport;
 import com.anima.basic.framework.permission.model.PermissionEntity;
 import com.anima.basic.framework.permission.service.PermissionService;
@@ -42,9 +41,7 @@ public class RbacServiceImpl implements RbacService {
     }
 
     @Override
-    public String[] getRoleIdsByRequest(SaRequest request) {
-        String uri = request.getRequestPath();
-        String method = request.getMethod();
+    public String[] getRoleIds4Request(String uri, String method) {
         PermissionEntity permission = this.permissionService.findByUriAndMethod(uri, method);
         // todo 后续缓存改造
         List<String> roleIds = this.rbacRolePermissionDao.getRoleIds(permission.getId())

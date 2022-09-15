@@ -1,4 +1,4 @@
-package com.anima.basic.framework.secret;
+package com.anima.basic.framework.sa;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;

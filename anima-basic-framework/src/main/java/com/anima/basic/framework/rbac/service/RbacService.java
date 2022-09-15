@@ -1,7 +1,5 @@
 package com.anima.basic.framework.rbac.service;
 
-import cn.dev33.satoken.context.model.SaRequest;
-
 import java.util.List;
 
 /**
@@ -20,6 +18,6 @@ public interface RbacService {
     /**
      * 根据请求获取具有改请求权限的所有角色列表
      */
-    String[] getRoleIdsByRequest(SaRequest request);
+    String[] getRoleIds4Request(String uri, String method);
 
 }
