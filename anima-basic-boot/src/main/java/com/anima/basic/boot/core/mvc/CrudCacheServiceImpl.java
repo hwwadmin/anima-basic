@@ -61,7 +61,7 @@ public abstract class CrudCacheServiceImpl<T extends BaseEntity, DAO extends Jpa
     }
 
     protected void delCache(Iterable<Long> ids) {
-        this.redisSupport.del(Lists.newArrayList(ids).stream().map(String::valueOf).collect(Collectors.toList()));
+        this.redisSupport.del(Lists.newArrayList(ids).stream().map(this::getKey).collect(Collectors.toList()));
     }
 
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
