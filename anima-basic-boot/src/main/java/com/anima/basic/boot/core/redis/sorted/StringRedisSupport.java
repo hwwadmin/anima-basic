@@ -58,7 +58,7 @@ public class StringRedisSupport {
     }
 
     public <T> List<T> batchGet(Collection<String> keys, TypeReference<List<T>> type) {
-        return Convert.convert(type, redisTemplate.opsForValue().multiGet(keys));
+        return Convert.convert(type, batchGet(keys));
     }
 
 }
