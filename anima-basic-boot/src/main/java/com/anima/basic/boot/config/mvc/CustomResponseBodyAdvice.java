@@ -1,6 +1,7 @@
 package com.anima.basic.boot.config.mvc;
 
 import com.anima.basic.boot.config.exception.GlobalExceptionHandler;
+import com.anima.basic.boot.core.pojo.vo.ListVo;
 import com.anima.basic.common.enums.StatusCodeEnum;
 import com.anima.basic.common.result.Response;
 import lombok.NonNull;
@@ -40,8 +41,11 @@ public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
-        if (body instanceof String || body instanceof Collection<?>) {
+        if (body instanceof String) {
             return Response.fail(StatusCodeEnum.commonError, "返回体不符合规范");
+        }
+        if (body instanceof Collection<?>) {
+            return Response.success(new ListVo<>(body));
         }
         return Response.success(body);
     }
