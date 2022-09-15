@@ -44,16 +44,15 @@ public class SaTokenInterceptorRegister implements InterceptorRegister {
         List<InterceptorInfo> interceptorInfos = Lists.newArrayList();
         interceptorInfos.add(InterceptorInfo.builder()
                 .name("SaRouteInterceptor")
-                .instance(new SaRouteInterceptor((req, res, handler) -> SaRouter.match("/**")
+                .instance(new SaRouteInterceptor((req, res, handler) -> SaRouter
+                        .match("/**")
                         .notMatch(notMatchList)
                         .check(r -> {
                             try {
                                 // 用户认证
                                 StpUtil.checkLogin();
                                 // 角色鉴权
-                                String uri = req.getRequestPath();
-                                String method = req.getMethod();
-                                StpUtil.hasRoleOr(rbacService.getRoleIds4Request(uri, method));
+                                StpUtil.hasRoleOr(rbacService.getRoleIds4Request(req.getRequestPath(), req.getMethod()));
                             } catch (Exception e) {
                                 // 异常包装
                                 throw IllegalValidatedException.exception(e);
