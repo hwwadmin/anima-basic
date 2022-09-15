@@ -2,6 +2,8 @@ package com.anima.basic.framework.sa;
 
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.lang.TypeReference;
 import com.anima.basic.framework.AnimaFrameworkConstants;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +28,7 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         // 角色从token-session读取
-        return (List<String>) StpUtil.getTokenSession().get(AnimaFrameworkConstants.role);
+        return Convert.convert(new TypeReference<>() {}, StpUtil.getTokenSession().get(AnimaFrameworkConstants.role));
     }
 
 }
